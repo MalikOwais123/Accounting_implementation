@@ -109,7 +109,7 @@ export default function UserProfile() {
         >
           <ProfileCover myProfile={_userAbout} />
 
-          <TabsWrapperStyle>
+          {/* <TabsWrapperStyle>
             <Tabs
               value={currentTab}
               scrollButtons="auto"
@@ -121,13 +121,13 @@ export default function UserProfile() {
                 <Tab disableRipple key={tab.value} value={tab.value} icon={tab.icon} label={capitalCase(tab.value)} />
               ))}
             </Tabs>
-          </TabsWrapperStyle>
+          </TabsWrapperStyle> */}
         </Card>
 
-        {PROFILE_TABS.map((tab) => {
+        {/* {PROFILE_TABS.map((tab) => {
           const isMatched = tab.value === currentTab;
           return isMatched && <Box key={tab.value}>{tab.component}</Box>;
-        })}
+        })} */}
       </Container>
     </Page>
   );

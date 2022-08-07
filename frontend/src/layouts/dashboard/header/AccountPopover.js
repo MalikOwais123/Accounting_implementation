@@ -21,16 +21,16 @@ import { IconButtonAnimate } from '../../../components/animate';
 const MENU_OPTIONS = [
   {
     label: 'Home',
-    linkTo: '/',
+    linkTo: PATH_DASHBOARD.root,
   },
   {
     label: 'Profile',
     linkTo: PATH_DASHBOARD.user.profile,
   },
-  {
-    label: 'Settings',
-    linkTo: PATH_DASHBOARD.user.account,
-  },
+  // {
+  //   label: 'Settings',
+  //   linkTo: PATH_DASHBOARD.user.account,
+  // },
 ];
 
 // ----------------------------------------------------------------------
@@ -125,11 +125,11 @@ export default function AccountPopover() {
           ))}
         </Stack>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        {/* <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
           Logout
-        </MenuItem>
+        </MenuItem> */}
       </MenuPopover>
     </>
   );

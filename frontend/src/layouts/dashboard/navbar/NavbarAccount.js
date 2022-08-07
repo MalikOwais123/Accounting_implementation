@@ -34,7 +34,7 @@ export default function NavbarAccount({ isCollapse }) {
   const { user } = useAuth();
 
   return (
-    <NextLink href={PATH_DASHBOARD.user.account} passHref>
+    <NextLink href={PATH_DASHBOARD.user.profile} passHref>
       <Link underline="none" color="inherit">
         <RootStyle
           sx={{
@@ -59,10 +59,11 @@ export default function NavbarAccount({ isCollapse }) {
             }}
           >
             <Typography variant="subtitle2" noWrap>
-              {user?.displayName}
+              {user?.username}
             </Typography>
             <Typography variant="body2" noWrap sx={{ color: 'text.secondary' }}>
-              {user?.role}
+              {/* {user?.role} */}
+              Admin
             </Typography>
           </Box>
         </RootStyle>

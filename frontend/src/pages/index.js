@@ -43,6 +43,7 @@ HomePage.getLayout = function getLayout(page) {
 
 export default function HomePage() {
   const { isAuthenticated } = useAuth()
+  console.log("isAuthenticated",isAuthenticated)
   const { push } = useRouter() // useRouter is a hook
 
   useEffect(() => {

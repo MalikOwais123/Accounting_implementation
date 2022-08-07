@@ -24,10 +24,10 @@ export default function Layout({ variant = 'dashboard', children }) {
   }
 
   return (
-    <PaymentGuard>
+    // <PaymentGuard>
       <AuthGuard>
         <DashboardLayout> {children} </DashboardLayout>
       </AuthGuard>
-    </PaymentGuard>
+    // </PaymentGuard>
   )
 }

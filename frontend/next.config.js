@@ -49,9 +49,12 @@ module.exports = (phase) => {
 
   const env = {
     HOST_API_KEY: (() => {
-      if (isDev) return 'http://localhost:5000/api'
-      if (isStaging) return 'http://localhost:5000/api'
-      if (isProd) return 'https://grcyberian.herokuapp.com/api'
+      if (isDev) return 'http://localhost:1337'
+      if (isStaging) return 'http://localhost:1337'
+      if (isProd) return 'http://localhost:1337'
+      // if (isDev) return 'http://localhost:5000/api'
+      // if (isStaging) return 'http://localhost:5000/api'
+      // if (isProd) return 'https://grcyberian.herokuapp.com/api'
 
       return 'HOST_API_KEY:not (isDev,isProd && !isStaging,isProd && isStaging)'
     })(),

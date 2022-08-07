@@ -17,36 +17,13 @@ AuthGuard.propTypes = {
 }
 
 export default function AuthGuard({ children }) {
-  // const { isAuthenticated } = useSelector((state) => state.user)
-  // const { /*isAuthenticated, */ isInitialized } = useAuth()
-  const { isAuthenticated, isInitialized, isSelectedSubscription, selectedSubscription } = useAuth()
-
-  const { pathname, push } = useRouter()
-
-  const [requestedLocation, setRequestedLocation] = useState(null)
-
-  useEffect(() => {
-    if (requestedLocation && pathname !== requestedLocation) {
-      setRequestedLocation(null)
-      push(requestedLocation)
-    }
-  }, [pathname, push, requestedLocation])
-
-  useEffect(() => {
-    console.log('AUTH GUARD ', { selectedSubscription }, { isAuthenticated }, { isSelectedSubscription })
-    // if (selectedSubscription?.paymentStatus === 'unpaid') push(PATH_AUTH.payment)
-    if (isSelectedSubscription === false && isAuthenticated === true) push(PATH_AUTH.userCompanies)
-    // else if (isSelectedSubscription === true && isAuthenticated === true) push(PATH_DASHBOARD.root)
-  }, [isSelectedSubscription, isAuthenticated])
+  const { isAuthenticated, isInitialized } = useAuth()
 
   if (!isInitialized) {
     return <LoadingScreen />
   }
 
   if (!isAuthenticated) {
-    if (pathname !== requestedLocation) {
-      setRequestedLocation(pathname)
-    }
     return <Login />
   }
 

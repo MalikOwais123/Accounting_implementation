@@ -1,5 +1,5 @@
 import axios from 'src/utils/axios'
-const { get, post, put } = axios
+const { get, post, put, delete: del } = axios
 
 const SERVICE_URLS = {
   getAccounts: () => `/api/accounts`,
@@ -32,5 +32,10 @@ export const createAccountAPI = async (body) => {
 // *UPDATE
 export const editAccountDetailAPI = async (id, body) => {
   const { data, status } = await put(SERVICE_URLS.accountByID(id), body)
+  return { data, status }
+}
+// *DELETE
+export const deleteAccountByIDAPI = async (id) => {
+  const { data, status } = await del(SERVICE_URLS.accountByID(id))
   return { data, status }
 }

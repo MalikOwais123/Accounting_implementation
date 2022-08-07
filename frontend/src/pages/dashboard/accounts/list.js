@@ -11,6 +11,7 @@ import {
   TableRow,
   TableHead,
   Typography,
+  CardHeader,
 } from '@mui/material'
 import HeaderBreadcrumbs from 'src/components/HeaderBreadcrumbs'
 import Page from 'src/components/Page'
@@ -18,7 +19,7 @@ import useSettings from 'src/hooks/useSettings'
 import { PATH_DASHBOARD } from 'src/routes/paths'
 // layouts
 import Layout from 'src/layouts'
-import { useGetAllAccounts } from 'src/query'
+import { useDeleteAccountByID, useGetAllAccounts } from 'src/query'
 import NextLink from 'next/link'
 import Iconify from 'src/components/Iconify'
 import Scrollbar from 'src/components/Scrollbar'
@@ -29,6 +30,7 @@ import { sentenceCase } from 'change-case'
 import { useTheme } from '@mui/material/styles'
 import ConfirmModal from 'src/components/dialogs/ConfirmModal'
 import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 
 const ICON = {
   mr: 2,
@@ -39,11 +41,27 @@ const ICON = {
 const List = () => {
   const [showModal, setShowModal] = useState(false)
   const { themeStretch } = useSettings()
+  const { enqueueSnackbar } = useSnackbar()
   const { push } = useRouter()
   const theme = useTheme()
 
   const { data, isLoading } = useGetAllAccounts()
+  const { mutateAsync: deleteAccount, isLoading: isDeleteLoading } = useDeleteAccountByID()
   const headingData = ['Name', 'des', 'Nature']
+
+  const onOkHanldler = async (id) => {
+    try {
+      const { status } = await deleteAccount(id)
+      console.log('status', status)
+      if (status === 200) {
+        enqueueSnackbar('Account deleted successfully', { variant: 'success' })
+        setShowModal(false)
+      }
+    } catch (err) {
+      console.log(err)
+      enqueueSnackbar(err.message, { variant: 'error' })
+    }
+  }
 
   return (
     <Page title="Account: List">
@@ -65,6 +83,8 @@ const List = () => {
         />
 
         <Card>
+          {/* TITLE OF TABLE */}
+          {<CardHeader title='Accounts' sx={{ mb: 3 }} />}{' '}
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -121,8 +141,8 @@ const List = () => {
                         <ConfirmModal
                           show={showModal}
                           onClose={() => setShowModal(false)}
-                          // onOk={onOkHanldler}
-                          // isLoading={isDeleteLoading}
+                          onOk={() => onOkHanldler(id)}
+                          isLoading={isDeleteLoading}
                         />
                       </TableRow>
                     )

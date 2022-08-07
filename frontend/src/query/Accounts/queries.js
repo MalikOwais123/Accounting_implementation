@@ -1,6 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { accountsKeys } from '../Keys/Accounts'
-import { getAccountsAPI, createAccountAPI,getAccountByIDAPI,editAccountDetailAPI } from './service'
+import {
+  getAccountsAPI,
+  createAccountAPI,
+  getAccountByIDAPI,
+  editAccountDetailAPI,
+  deleteAccountByIDAPI,
+} from './service'
 
 // ~all
 export const useGetAllAccounts = () =>
@@ -28,7 +34,17 @@ export const useCreateAccount = () => {
 export const useEditAccountDetail = (id) => {
   const queryClient = useQueryClient()
   return useMutation(({ ...payload }) => editAccountDetailAPI(id, payload), {
-    onSuccess: (data) => {
+    onSuccess: () => {
+      queryClient.invalidateQueries(accountsKeys.all())
+    },
+  })
+}
+
+// ~delete
+export const useDeleteAccountByID = () => {
+  const queryClient = useQueryClient()
+  return useMutation(deleteAccountByIDAPI, {
+    onSuccess: () => {
       queryClient.invalidateQueries(accountsKeys.all())
     },
   })

@@ -44,7 +44,7 @@ export default function UserEdit() {
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             { name: 'Account', href: PATH_DASHBOARD.user.list },
-            { name: capitalCase(name) },
+            // { name: capitalCase(name) },
           ]}
         />
 

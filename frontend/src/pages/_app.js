@@ -62,11 +62,11 @@ import MotionLazyContainer from 'src/components/animate/MotionLazyContainer'
 // import ConfirmCodeDialog from 'src/sections/auth/register/ConfirmCodeDialog'
 // hooks
 
-
 // Check our docs
 // https://docs-minimals.vercel.app/authentication/ts-version
 
-import { AuthProvider } from 'src/contexts/JWTContext';
+import { AuthProvider } from 'src/contexts/JWTContext'
+import { QueryClient, QueryClientProvider } from 'react-query'
 // import { AuthProvider } from 'src/contexts/Auth0Context';
 // import { AuthProvider } from 'src/contexts/FirebaseContext';
 // import { AuthProvider } from 'src/contexts/AwsCognitoContext'
@@ -91,8 +91,21 @@ export function GlobalDialogs() {
 }
 export default function MyApp(props) {
   const { Component, pageProps, settings } = props
-  
+
   const getLayout = Component.getLayout ?? ((page) => page)
+
+  const queryClient = new QueryClient({
+    // ? APP BY DEFAULT CONFIGURATION (AS ONE TIME FETCHING)
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+        refetchOnReconnect: false,
+        // refetchOnmount: false,
+        // staleTime: twentyFourHoursInMs,
+      },
+    },
+  })
 
   return (
     <>
@@ -100,35 +113,37 @@ export default function MyApp(props) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
-      <ReduxProvider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <AuthProvider>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <CollapseDrawerProvider>
-                <SettingsProvider defaultSettings={settings}>
-                  <ThemeProvider>
-                    <NotistackProvider>
-                      <MotionLazyContainer>
-                        <ThemeColorPresets>
-                          <ThemeLocalization>
-                            <RtlLayout>
-                              <ChartStyle />
-                              <Settings />
-                              <ProgressBar />
-                              <GlobalDialogs />
-                              {getLayout(<Component {...pageProps} />)}
-                            </RtlLayout>
-                          </ThemeLocalization>
-                        </ThemeColorPresets>
-                      </MotionLazyContainer>
-                    </NotistackProvider>
-                  </ThemeProvider>
-                </SettingsProvider>
-              </CollapseDrawerProvider>
-            </LocalizationProvider>
-          </AuthProvider>
-        </PersistGate>
-      </ReduxProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReduxProvider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <AuthProvider>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <CollapseDrawerProvider>
+                  <SettingsProvider defaultSettings={settings}>
+                    <ThemeProvider>
+                      <NotistackProvider>
+                        <MotionLazyContainer>
+                          <ThemeColorPresets>
+                            <ThemeLocalization>
+                              <RtlLayout>
+                                <ChartStyle />
+                                <Settings />
+                                <ProgressBar />
+                                <GlobalDialogs />
+                                {getLayout(<Component {...pageProps} />)}
+                              </RtlLayout>
+                            </ThemeLocalization>
+                          </ThemeColorPresets>
+                        </MotionLazyContainer>
+                      </NotistackProvider>
+                    </ThemeProvider>
+                  </SettingsProvider>
+                </CollapseDrawerProvider>
+              </LocalizationProvider>
+            </AuthProvider>
+          </PersistGate>
+        </ReduxProvider>
+      </QueryClientProvider>
     </>
   )
 }

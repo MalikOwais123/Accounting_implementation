@@ -57,6 +57,16 @@ const navConfig = [
           // { title: 'edit', path: PATH_DASHBOARD.accounts.editById },
         ],
       },
+      // MANAGEMENT : GENERAL JOURNALS
+      {
+        title: 'general Journals',
+        path: PATH_DASHBOARD.generalJournals.root,
+        icon: ICONS.user,
+        children: [
+          { title: 'list', path: PATH_DASHBOARD.generalJournals.list },
+          { title: 'create', path: PATH_DASHBOARD.generalJournals.new },
+        ],
+      },
       // MANAGEMENT : USER
       {
         title: 'user',

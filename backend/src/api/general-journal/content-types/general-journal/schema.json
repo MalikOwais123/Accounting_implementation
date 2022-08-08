@@ -20,6 +20,13 @@
     },
     "date": {
       "type": "date"
+    },
+    "explanation": {
+      "type": "text"
+    },
+    "genID": {
+      "type": "uid",
+      "required": true
     }
   }
 }

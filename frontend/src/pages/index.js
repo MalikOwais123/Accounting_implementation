@@ -18,7 +18,7 @@ import {
 } from 'src/sections/home'
 import useAuth from 'src/hooks/useAuth'
 import { useRouter } from 'next/router'
-import { PATH_AUTH } from 'src/routes/paths'
+import { PATH_AUTH, PATH_DASHBOARD } from 'src/routes/paths'
 import { useEffect } from 'react'
 
 // ----------------------------------------------------------------------
@@ -43,12 +43,11 @@ HomePage.getLayout = function getLayout(page) {
 
 export default function HomePage() {
   const { isAuthenticated } = useAuth()
-  console.log("isAuthenticated",isAuthenticated)
   const { push } = useRouter() // useRouter is a hook
 
   useEffect(() => {
     if (isAuthenticated) {
-      push(PATH_AUTH.root)
+      push(PATH_DASHBOARD.root)
     } else {
       push(PATH_AUTH.login)
     }

@@ -68,8 +68,12 @@ export const PATH_DASHBOARD = {
   accounts: {
     root: path(ROOTS_DASHBOARD, '/accounts'),
     list: path(ROOTS_DASHBOARD, '/accounts/list'),
-    new: path(ROOTS_DASHBOARD, '/accounts/new'),
-    // editById: (id) => path(ROOTS_DASHBOARD, `/accounts/${id}/edit`),
+    new: path(ROOTS_DASHBOARD, '/accounts/new')
+  },
+  generalJournals: {
+    root: path(ROOTS_DASHBOARD, '/generalJournal'),
+    list: path(ROOTS_DASHBOARD, '/generalJournal/list'),
+    new: path(ROOTS_DASHBOARD, '/generalJournal/new')
   },
   eCommerce: {
     root: path(ROOTS_DASHBOARD, '/e-commerce'),

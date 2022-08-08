@@ -21,6 +21,8 @@ import Label from '../../../components/Label'
 import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form'
 import { useCreateGeneralEntry, useEditAccountDetail, useGetAllAccounts } from 'src/query'
 
+import axios from 'axios'
+
 // ----------------------------------------------------------------------
 
 GeneralEntryNewForm.propTypes = {
@@ -103,7 +105,7 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
       const credit = modifyData(d.creditAcc, d.creditAmount)
       const _date = new Date(d.date).toISOString()
       const payload = {
-        data: { debit, credit, date: _date, explanation: d.explanation },
+        data: { debit, credit, date: _date },
       }
       console.log('payload', payload)
       const { status } = await createAPI(payload)
@@ -126,7 +128,7 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
     }
   }
 
-  const onSuccess = () => {
+  const onSuccess = async() => {
     reset()
     enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!')
     push(PATH_DASHBOARD.generalJournals.list)

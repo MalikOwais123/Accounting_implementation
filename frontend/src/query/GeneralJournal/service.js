@@ -5,6 +5,7 @@ const SERVICE_URLS = {
   getAll: () => `/api/general-journals`,
   accountByID: (id) => `/api/accounts/${id}`,
   createEntry: () => `/api/general-journals`,
+  postToLedger: () => `/api/ledger/work`,
 }
 
 // *ALL
@@ -26,9 +27,18 @@ export const getAccountByIDAPI = async (id) => {
 
 // *CREATE
 export const createGeneralEntryAPI = async (body) => {
-  const { data, status } = await post(SERVICE_URLS.createEntry(), body)
-  return { data, status }
+  try {
+    const { data, status: createSt } = await post(SERVICE_URLS.createEntry(), body)
+    if (createSt === 200) {
+      //  ~when entry created then posted to legder by make this following api works
+      const { status } = await get(SERVICE_URLS.postToLedger())
+      return { data, status }
+    }
+  } catch (err) {
+    return err
+  }
 }
+
 // *UPDATE
 export const editAccountDetailAPI = async (id, body) => {
   const { data, status } = await put(SERVICE_URLS.accountByID(id), body)

@@ -22,11 +22,10 @@ const RootStyle = styled(Card)(({ theme }) => ({
 BalanceSheetAccounts.propTypes = {
   color: PropTypes.oneOf(['primary', 'secondary', 'info', 'success', 'warning', 'error']),
   title: PropTypes.string,
-  isBalanceEqual: PropTypes.boolean,
 };
 
 
-export default function BalanceSheetAccounts({ isBalanceEqual, title = 'Assets', itemsList, color = 'primary' }) {
+export default function BalanceSheetAccounts({ title = 'Assets', itemsList, color = 'primary' }) {
   const theme = useTheme()
 
   return (

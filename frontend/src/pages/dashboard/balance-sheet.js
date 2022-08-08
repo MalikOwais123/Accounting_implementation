@@ -105,20 +105,20 @@ export default function BalanceSheet() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <BalanceSheetAccounts isBalanceEqual={isBalanceEqual} color="secondary" title="Assets" itemsList={currentAssetContents} />
+            <BalanceSheetAccounts color="secondary" title="Assets" itemsList={currentAssetContents} />
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={6} lg={12}>
-                <BalanceSheetAccounts isBalanceEqual={isBalanceEqual} color="warning" title="Liabilities" itemsList={currentLiabiltyContents} />
+                <BalanceSheetAccounts color="warning" title="Liabilities" itemsList={currentLiabiltyContents} />
               </Grid>
               <Grid item xs={12} md={6} lg={12}>
-                <BalanceSheetAccounts isBalanceEqual={isBalanceEqual} color="info" title="Owner's Equity" itemsList={equityContent} />
+                <BalanceSheetAccounts color="info" title="Owner's Equity" itemsList={equityContent} />
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
-            <BalanceTotalSummary title="Total Assets" total={totalCurrentAsset} color="success" />
+            <BalanceTotalSummary title="Total Assets" total={totalCurrentAsset} color={`${isBalanceEqual?"success":"error"}`} />
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
             <BalanceTotalSummary title="Total Equity & Liabilities" total={totalEquityAndLiabilities} color={`${isBalanceEqual?"success":"error"}`} />

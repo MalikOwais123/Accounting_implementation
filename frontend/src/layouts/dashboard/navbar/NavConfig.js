@@ -2,11 +2,13 @@
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
 import Label from '../../../components/Label';
+import Iconify from '../../../components/Iconify'
 import SvgIconStyle from '../../../components/SvgIconStyle';
 
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <SvgIconStyle src={`/icons/${name}.svg`} sx={{ width: 1, height: 1 }} />;
+const getIconifyIcon = (name) => <Iconify icon={name} color="" width={32} height={32} />
 
 const ICONS = {
   blog: getIcon('ic_blog'),
@@ -23,6 +25,11 @@ const ICONS = {
   booking: getIcon('ic_booking'),
 };
 
+const ICONIFYICONS = {
+  balanceSheet: getIconifyIcon('ic:outline-account-balance')
+}
+
+
 const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
@@ -34,6 +41,7 @@ const navConfig = [
         path: PATH_DASHBOARD.general.app,
         icon: ICONS.dashboard,
       },
+      { title: 'balance', path: PATH_DASHBOARD.general.balanceSheet, icon: ICONIFYICONS.balanceSheet },
       { title: 'e-commerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
       { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },

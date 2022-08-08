@@ -26,3 +26,6 @@ export const generalKeys = {
   // details: () => [...todoKeys.all, 'detail'],
   // detail: (id) => [...todoKeys.details(), id],
 }
+export const balanceSheetKey = {
+  ledgers: () => ['balance-sheet-ledgers'],
+}

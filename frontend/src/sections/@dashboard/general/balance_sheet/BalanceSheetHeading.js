@@ -29,7 +29,7 @@ export default function BalanceSheetHeading({ displayName }) {
     <RootStyle>
       <CardContent
         sx={{
-          // p: { md: 0 },
+          pt: 1,
           // pl: { md: 5 },
           color: 'grey.800',
         }}

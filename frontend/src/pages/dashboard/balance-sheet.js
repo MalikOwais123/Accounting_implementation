@@ -10,20 +10,7 @@ import Layout from '../../layouts'
 import Page from '../../components/Page'
 import { useGetLedgersAccounts } from 'src/query'
 import { ACC_NATURE } from 'src/utils/roles'
-// sections
-import {
-  AppWidget,
-  AppWelcome,
-  AppFeatured,
-  AppNewInvoice,
-  AppTopAuthors,
-  AppTopRelated,
-  AppAreaInstalled,
-  AppWidgetSummary,
-  AppCurrentDownload,
-  AppTopInstalledCountries,
-} from '../../sections/@dashboard/general/app'
-import { BalanceSheetHeading, BalanceSheetAccounts } from '../../sections/@dashboard/general/balance_sheet'
+import { BalanceSheetHeading, BalanceSheetAccounts,BalanceTotalSummary } from '../../sections/@dashboard/general/balance_sheet'
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +25,6 @@ export default function BalanceSheet() {
   const theme = useTheme()
   const { themeStretch } = useSettings()
   const { data } = useGetLedgersAccounts()
-  console.log('data', data)
 
   const totalCalculatedAmount = (debitAmountList, creditAmountList) => {
     let debitTotal = 0
@@ -86,9 +72,29 @@ export default function BalanceSheet() {
   const currentLiabiltyContents = accountsContentManager(ACC_NATURE.current_liability)
   const equityContent = accountsContentManager(ACC_NATURE.owner_equity)
 
-//   ~for now we are not considering this accounts
-//   const longTermAssetContents = accountsContentManager(ACC_NATURE.longterm_asset)
-//   const longTermLiabiltyContents = accountsContentManager(ACC_NATURE.longterm_liability)
+  //   ~for now we are not considering this accounts
+  //   const longTermAssetContents = accountsContentManager(ACC_NATURE.longterm_asset)
+  //   const longTermLiabiltyContents = accountsContentManager(ACC_NATURE.longterm_liability)
+
+  const computeTotal = (acc) => {
+    return acc?.reduce((accumulator, accContent) => {
+      accumulator = accumulator + parseInt(accContent.amount)
+      return accumulator
+    }, 0)
+  }
+
+
+
+  const liabilitiesTotal = computeTotal(currentLiabiltyContents) 
+  const equityTotal = computeTotal(equityContent) 
+  
+  // ASSETS
+  const totalCurrentAsset = computeTotal(currentAssetContents)
+  // EQUITY & LIBS
+  const totalEquityAndLiabilities = liabilitiesTotal + equityTotal
+
+  const isBalanceEqual = totalCurrentAsset === totalEquityAndLiabilities
+
 
   return (
     <Page title="General: App">
@@ -99,17 +105,23 @@ export default function BalanceSheet() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <BalanceSheetAccounts title="Assets" itemsList={currentAssetContents} />
+            <BalanceSheetAccounts isBalanceEqual={isBalanceEqual} color="secondary" title="Assets" itemsList={currentAssetContents} />
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={6} lg={12}>
-                            <BalanceSheetAccounts title="Liabilities" itemsList={currentLiabiltyContents} />
+                <BalanceSheetAccounts isBalanceEqual={isBalanceEqual} color="warning" title="Liabilities" itemsList={currentLiabiltyContents} />
               </Grid>
               <Grid item xs={12} md={6} lg={12}>
-                            <BalanceSheetAccounts title="Owner's Equity" itemsList={equityContent} />
+                <BalanceSheetAccounts isBalanceEqual={isBalanceEqual} color="info" title="Owner's Equity" itemsList={equityContent} />
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <BalanceTotalSummary title="Total Assets" total={totalCurrentAsset} color="success" />
+          </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <BalanceTotalSummary title="Total Equity & Liabilities" total={totalEquityAndLiabilities} color={`${isBalanceEqual?"success":"error"}`} />
           </Grid>
         </Grid>
       </Container>

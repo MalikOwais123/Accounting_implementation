@@ -4,6 +4,8 @@ import { TableCell, Divider, IconButton, MenuItem, Stack, Typography } from '@mu
 import { useTheme } from '@mui/material/styles'
 // @utils
 import { getStatusByValue, getStatusClr } from 'src/utils/roles'
+import Label from 'src/components/Label'
+
 // @packages
 import { useSnackbar } from 'notistack'
 import { sentenceCase } from 'change-case'
@@ -17,7 +19,7 @@ const ICON = {
 }
 
 const TrialBalanceRowDetail = ({ rowData, deleteRisk, isDeleteLoading }) => {
-    console.log("rowData",rowData)
+  console.log('rowData', rowData)
   const theme = useTheme()
   const [showModal, setShowModal] = useState(false)
   const { enqueueSnackbar } = useSnackbar()
@@ -25,19 +27,22 @@ const TrialBalanceRowDetail = ({ rowData, deleteRisk, isDeleteLoading }) => {
   return (
     <>
       <TableCell>
-          <Typography variant="subtitle2" noWrap >
-            {rowData.title}
-          </Typography>
+        <Typography variant="subtitle2" noWrap>
+          {rowData.title}
+          <Label sx={{margin:1}} variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'} color={getStatusClr(rowData.nature)}>
+            {sentenceCase(rowData.nature)}
+          </Label>
+        </Typography>
       </TableCell>
       <TableCell>
-          <Typography variant="subtitle2" noWrap my={1}>
-            {rowData?.accDetail?.nature === "debit" ? rowData?.accDetail?.amount : " "}
-          </Typography>
+        <Typography variant="subtitle2" noWrap my={1}>
+          {rowData?.accDetail?.nature === 'debit' ? rowData?.accDetail?.amount : ' '}
+        </Typography>
       </TableCell>
       <TableCell>
-          <Typography variant="subtitle2" noWrap my={1}>
-            {rowData?.accDetail?.nature === "credit" ? rowData?.accDetail?.amount : " "}
-          </Typography>
+        <Typography variant="subtitle2" noWrap my={1}>
+          {rowData?.accDetail?.nature === 'credit' ? rowData?.accDetail?.amount : ' '}
+        </Typography>
       </TableCell>
       {/* <TableCell>
         <Label variant={'ghost'} color={getStatusClr(row.status)}>

@@ -9,7 +9,18 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 // @mui
 import { DatePicker, LoadingButton } from '@mui/lab'
-import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel, MenuItem, TextField } from '@mui/material'
+import {
+  Box,
+  Card,
+  Grid,
+  Stack,
+  Switch,
+  Typography,
+  FormControlLabel,
+  MenuItem,
+  TextField,
+  Tooltip,
+} from '@mui/material'
 // utils
 import { fData } from '../../../utils/formatNumber'
 // routes
@@ -72,7 +83,8 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
     formState: { isSubmitting },
   } = methods
 
-  const values = watch()
+  const {debitAmount,creditAmount} = watch()
+  console.log("debitAmount,creditAmount",debitAmount,creditAmount) 
 
   useEffect(() => {
     if (isEdit && currentAccount) {
@@ -107,7 +119,6 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
       const payload = {
         data: { debit, credit, date: _date },
       }
-      console.log('payload', payload)
       const { status } = await createAPI(payload)
       if (status === 200) {
         onSuccess()
@@ -128,7 +139,7 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
     }
   }
 
-  const onSuccess = async() => {
+  const onSuccess = async () => {
     reset()
     enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!')
     push(PATH_DASHBOARD.generalJournals.list)
@@ -198,9 +209,11 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-              <LoadingButton type="submit" variant="contained" loading={isCreating || isEditing}>
-                {!isEdit ? 'Create Entry' : 'Save Changes'}
-              </LoadingButton>
+              <Tooltip title=" Mark all as read">
+                <LoadingButton type="submit" variant="contained" loading={isCreating || isEditing}>
+                  {!isEdit ? 'Create Entry' : 'Save Changes'}
+                </LoadingButton>
+              </Tooltip>
             </Stack>
           </Card>
         </Grid>

@@ -20,9 +20,9 @@ export const getStatusByValue = (value) => getKeyByValue(USER_STATUS, value)
 
 export const getStatusClr = (st) => {
   // return st === ('current_asset' || "current_liability") ? "success" : "warning"
-  return st === ('current_asset' || 'current_liability')
+  return st === ('current_asset' || 'longterm_asset')
     ? 'success'
-    : st === ('longterm_asset' || 'longterm_liability')
+    : st === ('current_liability' || 'longterm_liability')
     ? 'warning'
     : st === 'expense'
     ? 'error'

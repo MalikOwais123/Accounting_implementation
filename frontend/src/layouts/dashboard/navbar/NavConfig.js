@@ -27,6 +27,8 @@ const ICONS = {
 
 const ICONIFYICONS = {
   balanceSheet: getIconifyIcon('ic:outline-account-balance'),
+  generals: getIconifyIcon('clarity:table-line'),
+  accounts: getIconifyIcon('map:accounting'),
   ledger: getIconifyIcon('emojione-monotone:ledger'),
   trialBalance: getIconifyIcon('ic:round-account-balance-wallet')
 }
@@ -38,11 +40,13 @@ const navConfig = [
   {
     subheader: 'general',
     items: [
-      {
-        title: 'app',
-        path: PATH_DASHBOARD.general.app,
-        icon: ICONS.dashboard,
-      },
+      // {
+      //   title: 'app',
+      //   path: PATH_DASHBOARD.general.app,
+      //   icon: ICONS.dashboard,
+      // },
+      { title: 'accounts', path: PATH_DASHBOARD.accounts.list, icon: ICONIFYICONS.accounts }, // making this from general tab to general tab
+      { title: 'general journals', path: PATH_DASHBOARD.generalJournals.list, icon: ICONIFYICONS.generals }, // making this from general tab to general tab
       { title: 'ledger', path: PATH_DASHBOARD.general.ledger, icon: ICONIFYICONS.ledger },
       { title: 'balance sheet', path: PATH_DASHBOARD.general.balanceSheet, icon: ICONIFYICONS.balanceSheet },
       { title: 'trial balance', path: PATH_DASHBOARD.general.trialBalance, icon: ICONIFYICONS.trialBalance },

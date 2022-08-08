@@ -83,8 +83,8 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
     formState: { isSubmitting },
   } = methods
 
-  const {debitAmount,creditAmount} = watch()
-  console.log("debitAmount,creditAmount",debitAmount,creditAmount) 
+  const { debitAmount, creditAmount } = watch()
+  console.log('debitAmount,creditAmount', debitAmount, creditAmount)
 
   useEffect(() => {
     if (isEdit && currentAccount) {
@@ -209,11 +209,19 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-              <Tooltip title=" Mark all as read">
+              {debitAmount === creditAmount ? (
                 <LoadingButton type="submit" variant="contained" loading={isCreating || isEditing}>
                   {!isEdit ? 'Create Entry' : 'Save Changes'}
                 </LoadingButton>
-              </Tooltip>
+              ) : (
+                <Tooltip title="Accounts are not balanced">
+                  <span>
+                    <LoadingButton disabled type="submit" variant="contained" loading={isCreating || isEditing}>
+                      {!isEdit ? 'Create Entry' : 'Save Changes'}
+                    </LoadingButton>
+                  </span>
+                </Tooltip>
+              )}
             </Stack>
           </Card>
         </Grid>

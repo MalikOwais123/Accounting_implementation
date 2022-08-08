@@ -19,7 +19,6 @@ const ICON = {
 }
 
 const TrialBalanceRowDetail = ({ rowData, deleteRisk, isDeleteLoading }) => {
-  console.log('rowData', rowData)
   const theme = useTheme()
   const [showModal, setShowModal] = useState(false)
   const { enqueueSnackbar } = useSnackbar()

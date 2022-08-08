@@ -1,6 +1,18 @@
 // @mui
 import { useTheme } from '@mui/material/styles'
-import { Card, Container, Grid,CardHeader, Stack, Table, TableCell, TableContainer, TableHead, TableRow,TableBody } from '@mui/material'
+import {
+  Card,
+  Container,
+  Grid,
+  CardHeader,
+  Stack,
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableBody,
+} from '@mui/material'
 // hooks
 import useAuth from '../../hooks/useAuth'
 import useSettings from '../../hooks/useSettings'
@@ -14,6 +26,7 @@ import { TrialBalanceHeading } from '../../sections/@dashboard/general/trial_bal
 import { computeTotal } from 'src/utils/helpers'
 import Scrollbar from 'src/components/Scrollbar'
 import TrialBalanceRowDetail from 'src/sections/@dashboard/general/trial_balance/TrialBalanceRowDetail'
+import LastTotalRow from 'src/sections/@dashboard/general/trial_balance/LastTotalRow'
 
 // ----------------------------------------------------------------------
 
@@ -59,6 +72,15 @@ export default function TrialBalance() {
     }
   }
 
+  const totalAccountAmount = (accountType) =>
+    _modifiedData()
+      ?.filter((item) => item.accDetail.nature === accountType)
+      .map((el) => el.accDetail.amount)
+      .reduce((partialSum, a) => partialSum + a, 0)
+
+  console.log('Debit', totalAccountAmount('debit'))
+  console.log('Credit', totalAccountAmount('credit'))
+
   return (
     <Page title="General: App">
       <Container maxWidth={themeStretch ? false : 'xl'}>
@@ -82,13 +104,28 @@ export default function TrialBalance() {
                 <TableBody hover>
                   {_modifiedData()?.map((row) => {
                     return (
-                      <TableRow sx={{
-                        borderBottom : `1px solid ${theme.palette.grey[200]}`
-                      }} hover key={row.id}>
+                      <TableRow
+                        sx={{
+                          borderBottom: `1px solid ${theme.palette.grey[200]}`,
+                        }}
+                        hover
+                        key={row.id}
+                      >
                         <TrialBalanceRowDetail rowData={row} />
                       </TableRow>
                     )
                   })}
+                  <TableRow
+                    sx={{
+                      borderBottom: `1px solid ${theme.palette.grey[200]}`,
+                    }}
+                    hover
+                  >
+                    <LastTotalRow
+                      debitAmount={totalAccountAmount('debit')}
+                      creditAmount={totalAccountAmount('credit')}
+                    />
+                  </TableRow>
                 </TableBody>
               </Table>
             </TableContainer>

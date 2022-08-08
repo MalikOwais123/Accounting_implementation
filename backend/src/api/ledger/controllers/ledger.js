@@ -19,8 +19,6 @@ module.exports = createCoreController("api::ledger.ledger", ({ strapi }) => ({
       const ledgerData = await strapi.service("api::ledger.ledger").find();
 
       const lastData = generalJournalData.results.pop();
-      console.log("lastData",lastData);
-      console.log("ledgerData",ledgerData);
 
       const check1 = ledgerData.results.find(
         (e) => e.title === lastData.debit[0].attributes.title

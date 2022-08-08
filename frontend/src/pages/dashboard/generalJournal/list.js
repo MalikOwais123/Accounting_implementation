@@ -126,7 +126,9 @@ const List = () => {
                   {_modifyData?.map((row) => {
 
                     return (
-                      <TableRow hover key={row.id} >
+                      <TableRow sx={{
+                        borderBottom : `1px solid ${theme.palette.grey[200]}`
+                      }}  hover key={row.id} >
                         <GeneralListRowDetail rowData={row}/>
                       </TableRow>
                     )

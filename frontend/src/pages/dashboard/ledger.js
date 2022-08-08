@@ -20,7 +20,6 @@ BalanceSheet.getLayout = function getLayout(page) {
 export default function BalanceSheet() {
   const { themeStretch } = useSettings()
   const { data } = useGetLedgersAccounts()
-  console.log('data', data)
 
   return (
     <Page title="General: App">

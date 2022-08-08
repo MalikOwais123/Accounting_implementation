@@ -27,7 +27,8 @@ const ICONS = {
 
 const ICONIFYICONS = {
   balanceSheet: getIconifyIcon('ic:outline-account-balance'),
-  ledger: getIconifyIcon('emojione-monotone:ledger')
+  ledger: getIconifyIcon('emojione-monotone:ledger'),
+  trialBalance: getIconifyIcon('ic:round-account-balance-wallet')
 }
 
 
@@ -42,8 +43,9 @@ const navConfig = [
         path: PATH_DASHBOARD.general.app,
         icon: ICONS.dashboard,
       },
-      { title: 'balance', path: PATH_DASHBOARD.general.balanceSheet, icon: ICONIFYICONS.balanceSheet },
       { title: 'ledger', path: PATH_DASHBOARD.general.ledger, icon: ICONIFYICONS.ledger },
+      { title: 'balance sheet', path: PATH_DASHBOARD.general.balanceSheet, icon: ICONIFYICONS.balanceSheet },
+      { title: 'trial balance', path: PATH_DASHBOARD.general.trialBalance, icon: ICONIFYICONS.trialBalance },
       // { title: 'e-commerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
       // { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       // { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },

@@ -84,7 +84,7 @@ const List = () => {
 
         <Card>
           {/* TITLE OF TABLE */}
-          {<CardHeader title='Accounts' sx={{ mb: 3 }} />}{' '}
+          <CardHeader title='Accounts' sx={{ mb: 3 }} />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>

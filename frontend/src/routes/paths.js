@@ -43,6 +43,7 @@ export const PATH_DASHBOARD = {
     ledger: path(ROOTS_DASHBOARD, '/ledger'),
     adjustedLedger: path(ROOTS_DASHBOARD, '/adjusted-ledgers'),
     trialBalance: path(ROOTS_DASHBOARD, '/trial-balance'),
+    adjsutedTrialBalance: path(ROOTS_DASHBOARD, '/adjusted-trial-balance'),
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics'),
     banking: path(ROOTS_DASHBOARD, '/banking'),

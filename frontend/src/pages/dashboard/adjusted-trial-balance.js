@@ -81,7 +81,7 @@ export default function AdjustedTrialBalance() {
         (_GEN_LEG) => _GEN_LEG.attributes.title === _AD_LEG?.attributes.title
       )
 
-      if (isExistInGeneralAcc.id) {
+      if (isExistInGeneralAcc?.id) {
         //* if account exist so compute second account detail
         const generalAccDetail = getTrilBalAmount(
           isExistInGeneralAcc?.attributes.debit.amount,

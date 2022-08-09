@@ -52,6 +52,7 @@ const navConfig = [
       { title: 'trial balance', path: PATH_DASHBOARD.general.trialBalance, icon: ICONIFYICONS.trialBalance },
       { title: 'adjusted entries', path: PATH_DASHBOARD.generalJournals.adjustedEntriesList, icon: ICONIFYICONS.generals },
       { title: 'adjusted ledger', path: PATH_DASHBOARD.general.adjustedLedger, icon: ICONIFYICONS.ledger },
+      { title: 'adjusted trial balance', path: PATH_DASHBOARD.general.adjsutedTrialBalance, icon: ICONIFYICONS.trialBalance },
       // { title: 'e-commerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
       // { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       // { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },

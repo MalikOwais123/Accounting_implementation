@@ -30,7 +30,7 @@ import { countries } from '../../../_mock'
 // components
 import Label from '../../../components/Label'
 import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form'
-import { useCreateGeneralEntry, useEditAccountDetail, useGetAllAccounts } from 'src/query'
+import { useCreateGeneralEntry,useCreateAdjustmentEntry, useEditAccountDetail, useGetAllAccounts } from 'src/query'
 
 import axios from 'axios'
 
@@ -46,6 +46,7 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
 
   const { enqueueSnackbar } = useSnackbar()
   const { mutateAsync: createAPI, isLoading: isCreating } = useCreateGeneralEntry()
+  const { mutateAsync: createAdjustmentsEntry } = useCreateAdjustmentEntry()
   const { data: accountsList } = useGetAllAccounts()
   console.log('accountsList', accountsList)
   const { mutateAsync: editAccount, isLoading: isEditing } = useEditAccountDetail(currentAccount?.id)
@@ -119,7 +120,8 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
       const payload = {
         data: { debit, credit, date: _date },
       }
-      const { status } = await createAPI(payload)
+      const { status } = await createAdjustmentsEntry(payload)
+      // const { status } = await createAPI(payload)
       if (status === 200) {
         onSuccess()
       }

@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "adjusted_entries_records",
+  "info": {
+    "singularName": "adjusted-entries-record",
+    "pluralName": "adjusted-entries-records",
+    "displayName": "adjustedEntriesRecord",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "debit": {
+      "type": "json"
+    },
+    "credit": {
+      "type": "json"
+    },
+    "explanation": {
+      "type": "text",
+      "required": false
+    },
+    "date": {
+      "type": "date"
+    }
+  }
+}

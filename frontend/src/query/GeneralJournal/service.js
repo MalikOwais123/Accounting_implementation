@@ -5,6 +5,7 @@ const SERVICE_URLS = {
   getAll: () => `/api/general-journals`,
   accountByID: (id) => `/api/accounts/${id}`,
   createEntry: () => `/api/general-journals`,
+  createAdjustmentEntry: () => `/api/adjusted-entries-records`,
   postToLedger: () => `/api/ledger/work`,
 }
 
@@ -25,7 +26,7 @@ export const getAccountByIDAPI = async (id) => {
   return data
 }
 
-// *CREATE
+// *CREATE GENERAL ENTRY
 export const createGeneralEntryAPI = async (body) => {
   try {
     const { data, status: createSt } = await post(SERVICE_URLS.createEntry(), body)
@@ -34,6 +35,21 @@ export const createGeneralEntryAPI = async (body) => {
       const { status } = await get(SERVICE_URLS.postToLedger())
       return { data, status }
     }
+  } catch (err) {
+    return err
+  }
+}
+
+// *CREATE ADJUSTMENT ENTRY
+export const createAdjustmentEntryAPI = async (body) => {
+  try {
+    const { data, status: createSt } = await post(SERVICE_URLS.createAdjustmentEntry(), body)
+      return { data,createSt }
+    // if (createSt === 200) {
+    //   //  ~when entry created then posted to legder by make this following api works
+    //   const { status } = await get(SERVICE_URLS.postToLedger())
+    //   return { data, status }
+    // }
   } catch (err) {
     return err
   }

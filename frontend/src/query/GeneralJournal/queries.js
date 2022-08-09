@@ -6,6 +6,7 @@ import {
   getAccountByIDAPI,
   editAccountDetailAPI,
   deleteAccountByIDAPI,
+  createAdjustmentEntryAPI
 } from './service'
 
 // ~all
@@ -19,10 +20,21 @@ export const useGetAllJournalEntries = () =>
 // // ~by id
 // export const getAccountByID = (id) => useQuery(generalKeys.detail(id), () => getAccountByIDAPI(id))
 
-// ~create
+// ~create general entry
 export const useCreateGeneralEntry = () => {
   const queryClient = useQueryClient()
   return useMutation(createGeneralEntryAPI, {
+    onSuccess: () => {
+      // refetch the latest data
+      queryClient.invalidateQueries(generalKeys.all())
+    },
+  })
+}
+
+// ~create adjustmenr entry
+export const useCreateAdjustmentEntry = () => {
+  const queryClient = useQueryClient()
+  return useMutation(createAdjustmentEntryAPI, {
     onSuccess: () => {
       // refetch the latest data
       queryClient.invalidateQueries(generalKeys.all())

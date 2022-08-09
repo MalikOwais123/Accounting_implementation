@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "adjusted_ledgers",
+  "info": {
+    "singularName": "adjusted-ledger",
+    "pluralName": "adjusted-ledgers",
+    "displayName": "adjustedLedgers"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": false
+    },
+    "Nature": {
+      "type": "string"
+    },
+    "Debit": {
+      "type": "json"
+    },
+    "Credit": {
+      "type": "json"
+    }
+  }
+}

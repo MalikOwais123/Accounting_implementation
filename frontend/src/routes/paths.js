@@ -76,6 +76,7 @@ export const PATH_DASHBOARD = {
   generalJournals: {
     root: path(ROOTS_DASHBOARD, '/generalJournal'),
     list: path(ROOTS_DASHBOARD, '/generalJournal/list'),
+    adjustedEntriesList: path(ROOTS_DASHBOARD, '/generalJournal/adjusted-list'),
     new: path(ROOTS_DASHBOARD, '/generalJournal/new')
   },
   eCommerce: {

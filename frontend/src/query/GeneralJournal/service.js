@@ -3,6 +3,7 @@ const { get, post, put, delete: del } = axios
 
 const SERVICE_URLS = {
   getAll: () => `/api/general-journals`,
+  getAdjustedEntries: () => `/api/adjusted-entries-records`,
   accountByID: (id) => `/api/accounts/${id}`,
   createEntry: () => `/api/general-journals`,
   createAdjustmentEntry: () => `/api/adjusted-entries-records`,
@@ -13,6 +14,17 @@ const SERVICE_URLS = {
 // *ALL
 export const getAllJournalEntriesAPI = async () => {
   const { data } = await get(SERVICE_URLS.getAll())
+
+  const _data = data.data.map((d) => {
+    return { ...d.attributes, id: d.id }
+  })
+
+  return _data
+}
+
+// * ALL ADJUSTED ENTIRES
+export const getAllAdjustedEntiresAPI = async () => {
+  const { data } = await get(SERVICE_URLS.getAdjustedEntries())
 
   const _data = data.data.map((d) => {
     return { ...d.attributes, id: d.id }

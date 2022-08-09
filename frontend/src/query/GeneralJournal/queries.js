@@ -6,12 +6,21 @@ import {
   getAccountByIDAPI,
   editAccountDetailAPI,
   deleteAccountByIDAPI,
-  createAdjustmentEntryAPI
+  createAdjustmentEntryAPI,
+  getAllAdjustedEntiresAPI,
 } from './service'
 
 // ~all
 export const useGetAllJournalEntries = () =>
   useQuery(generalKeys.all(), () => getAllJournalEntriesAPI(), {
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+    refetchOnmount: true,
+  })
+
+// ~all adjusted entries
+export const useGetAllAdjustedEntires = () =>
+  useQuery(generalKeys.adjsutedEntiries(), () => getAllAdjustedEntiresAPI(), {
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,
     refetchOnmount: true,

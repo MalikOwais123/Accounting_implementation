@@ -14,7 +14,9 @@ export const accountsKeys = {
 }
 export const generalKeys = {
   all: () => ['generals-list'],
+  adjsutedEntiries: () => ['adjusted-entries-list'],
   detail: (id) => [...generalKeys.all(), id],
+
   
   // assessmentDetailTabView: (id, tab) => ['assessment_detail_tab_view', { id, tab }],
   // allUnpaginated: (role) => ['unpaginated_assessments', role],

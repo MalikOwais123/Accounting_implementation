@@ -50,6 +50,7 @@ const navConfig = [
       { title: 'ledger', path: PATH_DASHBOARD.general.ledger, icon: ICONIFYICONS.ledger },
       { title: 'balance sheet', path: PATH_DASHBOARD.general.balanceSheet, icon: ICONIFYICONS.balanceSheet },
       { title: 'trial balance', path: PATH_DASHBOARD.general.trialBalance, icon: ICONIFYICONS.trialBalance },
+      { title: 'adjusted entries', path: PATH_DASHBOARD.generalJournals.adjustedEntriesList, icon: ICONIFYICONS.generals },
       // { title: 'e-commerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
       // { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       // { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },

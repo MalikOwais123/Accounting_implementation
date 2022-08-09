@@ -4,24 +4,25 @@
   "info": {
     "singularName": "adjusted-ledger",
     "pluralName": "adjusted-ledgers",
-    "displayName": "adjustedLedgers"
+    "displayName": "adjustedLedgers",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string",
       "required": false
     },
-    "Nature": {
+    "nature": {
       "type": "string"
     },
-    "Debit": {
+    "debit": {
       "type": "json"
     },
-    "Credit": {
+    "credit": {
       "type": "json"
     }
   }

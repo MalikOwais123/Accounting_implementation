@@ -30,4 +30,5 @@ export const generalKeys = {
 }
 export const balanceSheetKey = {
   ledgers: () => ['balance-sheet-ledgers'],
+  adjustedLedgers: () => ['balance-sheet--adjusted-ledgers'],
 }

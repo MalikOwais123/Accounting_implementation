@@ -43,8 +43,8 @@ export default function AdjustedTrialBalance() {
   const { user } = useAuth()
   const theme = useTheme()
   const { themeStretch } = useSettings()
-  const { data: { data: generalLedegrs } = {}, isLoading } = useGetLedgersAccounts() || {}
-  const { data: { data: adjustedLedgers } = {} } = useGetAdjustedLedgers() || {}
+  const { data: { data: generalLedegrs = [] } = {}, isLoading } = useGetLedgersAccounts() || {}
+  const { data: { data: adjustedLedgers = [] } = {} } = useGetAdjustedLedgers() || {}
 
   const getTrilBalAmount = (debitAccs, creditAccs) => {
     const _debitAm = computeTotal(debitAccs)
@@ -62,11 +62,10 @@ export default function AdjustedTrialBalance() {
   }
 
   const totalAccountAmount = (accountType) =>
-  _modifiedAdjustedAccounts()
+    _modifiedAdjustedAccounts()
       ?.filter((item) => item.accDetail.nature === accountType)
       .map((el) => el.accDetail.amount)
       .reduce((partialSum, a) => partialSum + a, 0)
-
 
   const _modifiedAdjustedAccounts = () => {
     let _array = []
@@ -87,34 +86,34 @@ export default function AdjustedTrialBalance() {
           isExistInGeneralAcc?.attributes.debit.amount,
           _AD_LEG?.attributes.credit.amount
         )
-        
+
         // TODO : IF BOTH HAVE SAME NATURE EITHER DEBIT OR CREDIT THEN HANDLE THIS CASE
-        
+
         // *check for account nature
         if (adjustedAccDetail.nature === 'debit' && generalAccDetail.nature === 'credit') {
           const resultedAccDetail = getTrilBalAmount([adjustedAccDetail.amount], [generalAccDetail.amount])
 
           _array.push({
-              id: _AD_LEG.id,
+            id: _AD_LEG.id,
             title: _AD_LEG.attributes.title,
-            nature : _AD_LEG.attributes.nature,
+            nature: _AD_LEG.attributes.nature,
             accDetail: resultedAccDetail,
           })
         } else if (adjustedAccDetail.nature === 'credit' && generalAccDetail.nature === 'debit') {
           const resultedAccDetail = getTrilBalAmount([generalAccDetail.amount], [adjustedAccDetail.amount])
 
           _array.push({
-              id: _AD_LEG.id,
+            id: _AD_LEG.id,
             title: _AD_LEG.attributes.title,
-            nature : _AD_LEG.attributes.nature,
+            nature: _AD_LEG.attributes.nature,
             accDetail: resultedAccDetail,
           })
         }
       } else {
         _array.push({
-            id: _AD_LEG.id,
+          id: _AD_LEG.id,
           title: _AD_LEG.attributes.title,
-          nature : _AD_LEG.attributes.nature,
+          nature: _AD_LEG.attributes.nature,
           accDetail: adjustedAccDetail,
         })
       }
@@ -128,15 +127,50 @@ export default function AdjustedTrialBalance() {
     // loop general ledgers and adjust the amount
     _filteredGeneralLedegrs?.forEach((el) => {
       _array.push({
-          id: el.id,
+        id: el.id,
         title: el.attributes.title,
-        nature : el.attributes.nature,
+        nature: el.attributes.nature,
         accDetail: getTrilBalAmount(el?.attributes.debit.amount, el?.attributes.credit.amount),
       })
     })
-    
+
     return _array
   }
+
+  // console.log('generalLedegrs', generalLedegrs)
+  // console.log('adjustedLedgers', adjustedLedgers)
+
+  // const _temp = (_tobeModified) => {
+  //   let _filteredArray = []
+
+  //   // loop to the array that need to be modified
+  //   _tobeModified?.forEach((_item)=> {
+  //     if(!_filteredArray.find((_filterItem) => _filterItem.title === _item.attributes.title)) {
+  //       // if not exist in the array then push it
+  //       // check if the _item is exits in the _tobeModified array
+  //       if(!_tobeModified.find((_el) => _el.attributes.title === _filterItem.attributes.title)) {
+  //         // if not exist in the _tobeModified array then push it
+  //         _filteredArray.push({
+  //           id: _item.id,
+  //           title: _item.attributes.title,
+  //           nature: _item.attributes.nature,
+  //           accDetail: getTrilBalAmount(_item?.attributes.debit.amount, _item?.attributes.credit.amount),
+  //         })
+  //       }else {
+  //         // if exist in the array then compare it with amount because it is duplicated
+  //       }
+  //     }else {
+  //       // continue to next iteration
+        
+  //     }
+  //   })
+
+ 
+
+  //   return _filteredArray
+  // }
+  console.log('generalLedegrs', [...generalLedegrs, ...adjustedLedgers])
+  // console.log('_temp', _temp([...generalLedegrs, ...adjustedLedgers]))
 
   return (
     <Page title="General: App">

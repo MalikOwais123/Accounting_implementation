@@ -137,40 +137,54 @@ export default function AdjustedTrialBalance() {
     return _array
   }
 
-  // console.log('generalLedegrs', generalLedegrs)
-  // console.log('adjustedLedgers', adjustedLedgers)
+  const _adjustedAndUpdatedAccounts = (_tobeModified) => {
+    let _filteredArray = []
 
-  // const _temp = (_tobeModified) => {
-  //   let _filteredArray = []
+    // ~loop to the array that need to be modified
+    _tobeModified?.forEach((_currentItem) => {
+      // ?check 1 ** check current item exist previusoly or not ??
+      const alreadyExistedAcc = _filteredArray.find(
+        (_previousItem, ind) => _previousItem.title === _currentItem.attributes.title
+      )
+      if (!alreadyExistedAcc) {
+        // ~ if _current item is not existed before then push it to the tempArray that is _filteredArray
+        _filteredArray.push({
+          id: _currentItem.id,
+          title: _currentItem.attributes.title,
+          nature: _currentItem.attributes.nature,
+          accDetail: getTrilBalAmount(_currentItem?.attributes.debit.amount, _currentItem?.attributes.credit.amount),
+        })
+      } else {
+        // ~ if _current item is already exist then compute the new amount and update the existing item in the _filteredArray
+        const _indexOfExistingAcc = _filteredArray.findIndex((item) => item.title === _currentItem.attributes.title)
+        const _currentItemDetail = getTrilBalAmount(
+          _currentItem?.attributes.debit.amount,
+          _currentItem?.attributes.credit.amount
+        )
+        if (alreadyExistedAcc.accDetail.amount > _currentItemDetail.amount) {
+          const _updatedAccDetail = {
+            nature: alreadyExistedAcc.accDetail.nature,
+            amount: alreadyExistedAcc.accDetail.amount - _currentItemDetail.amount,
+          }
+          _filteredArray[_indexOfExistingAcc].accDetail = _updatedAccDetail
+        } else if (_currentItemDetail.amount > alreadyExistedAcc.accDetail.amount) {
+          const _updatedAccDetail = {
+            nature: _currentItemDetail.accDetail.nature,
+            amount: _currentItemDetail.accDetail.amount - alreadyExistedAcc.accDetail.amount,
+          }
+          _filteredArray[_indexOfExistingAcc].accDetail = _updatedAccDetail
+        } else if (_currentItemDetail.amount === alreadyExistedAcc.accDetail.amount) {
+          const _updatedAccDetail = {
+            nature: _currentItemDetail.accDetail.nature,
+            amount: _currentItemDetail.accDetail.amount + alreadyExistedAcc.accDetail.amount,
+          }
+          _filteredArray[_indexOfExistingAcc].accDetail = _updatedAccDetail
+        }
+      }
+    })
 
-  //   // loop to the array that need to be modified
-  //   _tobeModified?.forEach((_item)=> {
-  //     if(!_filteredArray.find((_filterItem) => _filterItem.title === _item.attributes.title)) {
-  //       // if not exist in the array then push it
-  //       // check if the _item is exits in the _tobeModified array
-  //       if(!_tobeModified.find((_el) => _el.attributes.title === _filterItem.attributes.title)) {
-  //         // if not exist in the _tobeModified array then push it
-  //         _filteredArray.push({
-  //           id: _item.id,
-  //           title: _item.attributes.title,
-  //           nature: _item.attributes.nature,
-  //           accDetail: getTrilBalAmount(_item?.attributes.debit.amount, _item?.attributes.credit.amount),
-  //         })
-  //       }else {
-  //         // if exist in the array then compare it with amount because it is duplicated
-  //       }
-  //     }else {
-  //       // continue to next iteration
-        
-  //     }
-  //   })
-
- 
-
-  //   return _filteredArray
-  // }
-  console.log('generalLedegrs', [...generalLedegrs, ...adjustedLedgers])
-  // console.log('_temp', _temp([...generalLedegrs, ...adjustedLedgers]))
+    return _filteredArray
+  }
 
   return (
     <Page title="General: App">
@@ -193,7 +207,7 @@ export default function AdjustedTrialBalance() {
                 )}
 
                 <TableBody hover>
-                  {_modifiedAdjustedAccounts()?.map((row) => {
+                  {_adjustedAndUpdatedAccounts([...generalLedegrs, ...adjustedLedgers])?.map((row) => {
                     return (
                       <TableRow
                         sx={{

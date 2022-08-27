@@ -2,9 +2,9 @@ import axios from 'src/utils/axios'
 const { get, post, put, delete: del } = axios
 
 const SERVICE_URLS = {
-  getAccounts: () => `/api/accounts`,
-  accountByID: (id) => `/api/accounts/${id}`,
-  createAccount: () => `/api/accounts`,
+  getAccounts: () => `/api/company-accounts`,
+  accountByID: (id) => `/api/company-accounts/${id}`,
+  createAccount: () => `/api/company-accounts`,
 }
 
 // *ALL

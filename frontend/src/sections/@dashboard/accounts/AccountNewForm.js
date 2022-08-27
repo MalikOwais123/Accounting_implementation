@@ -49,6 +49,10 @@ const ACCOUNT_NATURE = [
     label: 'Expense',
   },
   {
+    value: 'drawing',
+    label: 'Drawing',
+  },
+  {
     value: 'owner_equity',
     label: 'Owner equity',
   },
@@ -63,19 +67,19 @@ export default function AccountNewForm({ isEdit = false, currentAccount }) {
   const { push } = useRouter()
 
   const { enqueueSnackbar } = useSnackbar()
-  const { mutateAsync: createAccount, isLoading:isCreating } = useCreateAccount()
-  const { mutateAsync: editAccount,isLoading:isEditing } = useEditAccountDetail(currentAccount?.id)
+  const { mutateAsync: createAccount, isLoading: isCreating } = useCreateAccount()
+  const { mutateAsync: editAccount, isLoading: isEditing } = useEditAccountDetail(currentAccount?.id)
 
   const NewAccountSchema = Yup.object().shape({
     title: Yup.string().required('Name is required'),
-    description: Yup.string().required('Description is required'),
+    // description: Yup.string().required('Description is required'),
     nature: Yup.string().required('Nature is required'),
   })
 
   const defaultValues = useMemo(
     () => ({
       title: currentAccount?.title || '',
-      description: currentAccount?.description || '',
+      // description: currentAccount?.description || '',
       nature: currentAccount?.nature || '',
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -133,7 +137,7 @@ export default function AccountNewForm({ isEdit = false, currentAccount }) {
   const onSuccess = () => {
     reset()
     enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!')
-    push(PATH_DASHBOARD.accounts.list)
+    // push(PATH_DASHBOARD.accounts.list)
   }
 
   return (
@@ -158,8 +162,7 @@ export default function AccountNewForm({ isEdit = false, currentAccount }) {
                   </MenuItem>
                 ))}
               </RHFSelect>
-
-              <RHFTextField name="description" label="Description" />
+              {/* <RHFTextField name="description" label="Description" /> */}
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>

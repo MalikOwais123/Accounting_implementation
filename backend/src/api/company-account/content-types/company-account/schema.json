@@ -1,11 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "accounts",
+  "collectionName": "company_accounts",
   "info": {
-    "singularName": "account",
-    "pluralName": "accounts",
-    "displayName": "account",
-    "description": ""
+    "singularName": "company-account",
+    "pluralName": "company-accounts",
+    "displayName": "company account"
   },
   "options": {
     "draftAndPublish": true
@@ -15,13 +14,10 @@
     "title": {
       "type": "string"
     },
-    "description": {
-      "type": "text"
-    },
     "nature": {
       "type": "enumeration",
       "enum": [
-        "_12",
+        "drawing",
         "current_asset",
         "longterm_asset",
         "current_liability",

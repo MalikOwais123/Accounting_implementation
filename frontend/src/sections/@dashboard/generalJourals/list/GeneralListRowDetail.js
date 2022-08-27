@@ -45,6 +45,9 @@ const GeneralListRowDetail = ({ rowData, deleteRisk, isDeleteLoading }) => {
           <Typography align="center" variant="subtitle2" noWrap my={1}>
             {rowData.creditAccount}
           </Typography>
+          <Typography variant="body2" color={'text.secondary'} noWrap my={1}>
+            {rowData.explanation}
+          </Typography>
         </Stack>
           {/* <Typography variant="caption" wrap my={1}>
             any short explanationdfs dfsdfsdfsdfsdf sd fsf dsdfsdfsdfsdfsdfsfs explanationdfsdfsdfsdfsdfsdfsdfsfdsdfsdfsdfsdfsdfsfs

@@ -48,6 +48,7 @@ const getTransformData = (d) => {
       return {
         date : el?.date,
         id : el?.id ,
+        explanation : el?.explanation ,
         debitAccount : el?.debit?.[0].attributes?.title,
         creditAccount : el?.credit?.[0].attributes?.title,
         debitAmount : el?.debit?.amount,
@@ -67,7 +68,7 @@ const List = () => {
 
   const { data, isLoading } = useGetAllJournalEntries()
   const _modifyData = getTransformData(data)
-  console.log("_modifyData",_modifyData)
+  console.log("data",data)
   const { mutateAsync: deleteAccount, isLoading: isDeleteLoading } = useDeleteAccountByID()
   const headingData = ['Date', 'Account', 'Debit', 'Credit']
 

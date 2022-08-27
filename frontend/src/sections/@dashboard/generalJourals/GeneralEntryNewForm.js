@@ -30,7 +30,7 @@ import { countries } from '../../../_mock'
 // components
 import Label from '../../../components/Label'
 import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFCheckbox } from '../../../components/hook-form'
-import { useCreateGeneralEntry,useCreateAdjustmentEntry, useEditAccountDetail, useGetAllAccounts } from 'src/query'
+import { useCreateGeneralEntry, useCreateAdjustmentEntry, useEditAccountDetail, useGetAllAccounts } from 'src/query'
 
 import axios from 'axios'
 
@@ -118,14 +118,14 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
       const credit = modifyData(d.creditAcc, d.creditAmount)
       const _date = new Date(d.date).toISOString()
       const payload = {
-        data: { debit, credit, date: _date },
+        data: { debit, credit, date: _date, explanation: d.explanation },
       }
-      if(d.isAdjustedEntry) {
+      if (d.isAdjustedEntry) {
         const { status } = await createAdjustmentsEntry(payload)
         if (status === 200) {
           onSuccess()
         }
-      }else {
+      } else {
         const { status } = await createAPI(payload)
         if (status === 200) {
           onSuccess()
@@ -216,9 +216,8 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
               </Grid>
             </Box>
 
-
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mt: 3 }}>
-            <RHFCheckbox name="isAdjustedEntry" label="Adjusted entry." />
+              <RHFCheckbox name="isAdjustedEntry" label="Adjusted entry." />
               {debitAmount === creditAmount ? (
                 <LoadingButton type="submit" variant="contained" loading={isCreating || isEditing}>
                   {!isEdit ? 'Create Entry' : 'Save Changes'}

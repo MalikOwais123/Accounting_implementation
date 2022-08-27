@@ -8,6 +8,7 @@ import Layout from '../../layouts'
 import Page from '../../components/Page'
 import { LedgerTAccounts } from '../../sections/@dashboard/general/ledger'
 import { useGetLedgersAccounts, useGetAdjustedLedgers } from 'src/query'
+import EmptyContent from 'src/components/EmptyContent'
 
 // ----------------------------------------------------------------------
 
@@ -22,22 +23,16 @@ export default function AdjustedLedgers() {
   const { data: generalLedegrs } = useGetLedgersAccounts()
   const { data: adjustedLedgers } = useGetAdjustedLedgers()
 
-  console.log('adjustedLedgers', adjustedLedgers)
-  console.log('generalLedegrs', generalLedegrs)
-
   return (
     <Page title="General: App">
       <Container maxWidth={themeStretch ? false : 'xl'}>
-        {/* <Grid container spacing={3}>
-          {generalLedegrs?.data?.map((element, i) => {
-            return (
-              <Grid item xs={12} sm={6} md={4} lg={4} key={i}>
-                <LedgerTAccounts accountContent={element.attributes} />
-              </Grid>
-            )
-          })}
-        </Grid> */}
-        {/* <Divider my={3}/> */}
+        {adjustedLedgers?.data?.length === 0 && (
+        <EmptyContent
+          title={`There are no Ledgers`}
+          img="/icons/illustration_empty_content.svg"
+          sx={{ flexGrow: 1, height: 'auto' }}
+        />
+        )}
         <Grid container spacing={3}>
           {adjustedLedgers?.data?.map((element, i) => {
             return (

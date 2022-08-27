@@ -8,6 +8,7 @@ import Layout from '../../layouts'
 import Page from '../../components/Page'
 import { LedgerTAccounts } from '../../sections/@dashboard/general/ledger'
 import { useGetLedgersAccounts } from 'src/query'
+import EmptyContent from 'src/components/EmptyContent'
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +25,13 @@ export default function BalanceSheet() {
   return (
     <Page title="General: App">
       <Container maxWidth={themeStretch ? false : 'xl'}>
+        {data?.data?.lenght === 0 && (
+          <EmptyContent
+            title={`There is no Ledgers`}
+            img="/icons/illustration_empty_content.svg"
+            sx={{ flexGrow: 1, height: 'auto' }}
+          />
+        )}
         <Grid container spacing={3}>
           {data?.data?.map((element, i) => {
             return (

@@ -150,7 +150,7 @@ export default function GeneralEntryNewForm({ isEdit = false, currentAccount }) 
   const onSuccess = async () => {
     reset()
     enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!')
-    push(PATH_DASHBOARD.generalJournals.list)
+    // push(PATH_DASHBOARD.generalJournals.list)
   }
 
   return (

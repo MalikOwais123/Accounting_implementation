@@ -62,80 +62,87 @@ export default function AdjustedTrialBalance() {
   }
 
   const totalAccountAmount = (accountType) =>
-    _modifiedAdjustedAccounts()
-      ?.filter((item) => item.accDetail.nature === accountType)
-      .map((el) => el.accDetail.amount)
-      .reduce((partialSum, a) => partialSum + a, 0)
-
-  const _modifiedAdjustedAccounts = () => {
-    let _array = []
-
-    // loop adjusted ledgers
-    // ~_adjLedger --- > _AD_LEG
-    // ~_generalLedegr --- > _GEN_LEG
-
-    adjustedLedgers?.forEach((_AD_LEG) => {
-      const adjustedAccDetail = getTrilBalAmount(_AD_LEG?.attributes.debit.amount, _AD_LEG?.attributes.credit.amount)
-      const isExistInGeneralAcc = generalLedegrs.find(
-        (_GEN_LEG) => _GEN_LEG.attributes.title === _AD_LEG?.attributes.title
-      )
-
-      if (isExistInGeneralAcc?.id) {
-        //* if account exist so compute second account detail
-        const generalAccDetail = getTrilBalAmount(
-          isExistInGeneralAcc?.attributes.debit.amount,
-          _AD_LEG?.attributes.credit.amount
-        )
-
-        // TODO : IF BOTH HAVE SAME NATURE EITHER DEBIT OR CREDIT THEN HANDLE THIS CASE
-
-        // *check for account nature
-        if (adjustedAccDetail.nature === 'debit' && generalAccDetail.nature === 'credit') {
-          const resultedAccDetail = getTrilBalAmount([adjustedAccDetail.amount], [generalAccDetail.amount])
-
-          _array.push({
-            id: _AD_LEG.id,
-            title: _AD_LEG.attributes.title,
-            nature: _AD_LEG.attributes.nature,
-            accDetail: resultedAccDetail,
-          })
-        } else if (adjustedAccDetail.nature === 'credit' && generalAccDetail.nature === 'debit') {
-          const resultedAccDetail = getTrilBalAmount([generalAccDetail.amount], [adjustedAccDetail.amount])
-
-          _array.push({
-            id: _AD_LEG.id,
-            title: _AD_LEG.attributes.title,
-            nature: _AD_LEG.attributes.nature,
-            accDetail: resultedAccDetail,
-          })
-        }
-      } else {
-        _array.push({
-          id: _AD_LEG.id,
-          title: _AD_LEG.attributes.title,
-          nature: _AD_LEG.attributes.nature,
-          accDetail: adjustedAccDetail,
-        })
-      }
-    })
-
-    // filter from general ledgers those account that has already been present in _array
-    const _filteredGeneralLedegrs = generalLedegrs?.filter(
-      (_GEN_LEG) => !_array.find((item) => item.title === _GEN_LEG.attributes.title)
-    )
-
-    // loop general ledgers and adjust the amount
-    _filteredGeneralLedegrs?.forEach((el) => {
-      _array.push({
-        id: el.id,
-        title: el.attributes.title,
-        nature: el.attributes.nature,
-        accDetail: getTrilBalAmount(el?.attributes.debit.amount, el?.attributes.credit.amount),
-      })
-    })
-
-    return _array
+  {
+    // previous Logic
+    // return _modifiedAdjustedAccounts()
+    // ?.filter((item) => item.accDetail.nature === accountType)
+    // .map((el) => el.accDetail.amount)
+    // .reduce((partialSum, a) => partialSum + a, 0)
+    return _adjustedAndUpdatedAccounts([...generalLedegrs, ...adjustedLedgers])
+    ?.filter((item) => item.accDetail.nature === accountType)
+    .map((el) => el.accDetail.amount)
+    .reduce((partialSum, a) => partialSum + a, 0)
+    
   }
+  // const _modifiedAdjustedAccounts = () => {
+  //   let _array = []
+
+  //   // loop adjusted ledgers
+  //   // ~_adjLedger --- > _AD_LEG
+  //   // ~_generalLedegr --- > _GEN_LEG
+
+  //   adjustedLedgers?.forEach((_AD_LEG) => {
+  //     const adjustedAccDetail = getTrilBalAmount(_AD_LEG?.attributes.debit.amount, _AD_LEG?.attributes.credit.amount)
+  //     const isExistInGeneralAcc = generalLedegrs.find(
+  //       (_GEN_LEG) => _GEN_LEG.attributes.title === _AD_LEG?.attributes.title
+  //     )
+
+  //     if (isExistInGeneralAcc?.id) {
+  //       //* if account exist so compute second account detail
+  //       const generalAccDetail = getTrilBalAmount(
+  //         isExistInGeneralAcc?.attributes.debit.amount,
+  //         _AD_LEG?.attributes.credit.amount
+  //       )
+
+  //       // TODO : IF BOTH HAVE SAME NATURE EITHER DEBIT OR CREDIT THEN HANDLE THIS CASE
+
+  //       // *check for account nature
+  //       if (adjustedAccDetail.nature === 'debit' && generalAccDetail.nature === 'credit') {
+  //         const resultedAccDetail = getTrilBalAmount([adjustedAccDetail.amount], [generalAccDetail.amount])
+
+  //         _array.push({
+  //           id: _AD_LEG.id,
+  //           title: _AD_LEG.attributes.title,
+  //           nature: _AD_LEG.attributes.nature,
+  //           accDetail: resultedAccDetail,
+  //         })
+  //       } else if (adjustedAccDetail.nature === 'credit' && generalAccDetail.nature === 'debit') {
+  //         const resultedAccDetail = getTrilBalAmount([generalAccDetail.amount], [adjustedAccDetail.amount])
+
+  //         _array.push({
+  //           id: _AD_LEG.id,
+  //           title: _AD_LEG.attributes.title,
+  //           nature: _AD_LEG.attributes.nature,
+  //           accDetail: resultedAccDetail,
+  //         })
+  //       }
+  //     } else {
+  //       _array.push({
+  //         id: _AD_LEG.id,
+  //         title: _AD_LEG.attributes.title,
+  //         nature: _AD_LEG.attributes.nature,
+  //         accDetail: adjustedAccDetail,
+  //       })
+  //     }
+  //   })
+
+  //   // filter from general ledgers those account that has already been present in _array
+  //   const _filteredGeneralLedegrs = generalLedegrs?.filter(
+  //     (_GEN_LEG) => !_array.find((item) => item.title === _GEN_LEG.attributes.title)
+  //   )
+
+  //   // loop general ledgers and adjust the amount
+  //   _filteredGeneralLedegrs?.forEach((el) => {
+  //     _array.push({
+  //       id: el.id,
+  //       title: el.attributes.title,
+  //       nature: el.attributes.nature,
+  //       accDetail: getTrilBalAmount(el?.attributes.debit.amount, el?.attributes.credit.amount),
+  //     })
+  //   })
+
+  //   return _array
+  // }
 
   const _adjustedAndUpdatedAccounts = (_tobeModified) => {
     let _filteredArray = []
@@ -186,6 +193,7 @@ export default function AdjustedTrialBalance() {
     return _filteredArray
   }
 
+  
   return (
     <Page title="General: App">
       <Container maxWidth={themeStretch ? false : 'xl'}>

@@ -47,7 +47,7 @@ const List = () => {
 
   const { data, isLoading } = useGetAllAccounts()
   const { mutateAsync: deleteAccount, isLoading: isDeleteLoading } = useDeleteAccountByID()
-  const headingData = ['Name', 'des', 'Nature']
+  const headingData = ['Name', 'Nature']
 
   const onOkHanldler = async (id) => {
     try {
@@ -111,7 +111,7 @@ const List = () => {
                             {title}
                           </Typography>
                         </TableCell>
-                        <TableCell align="left">{description}</TableCell>
+                        {/* <TableCell align="left">{description}</TableCell> */}
                         <TableCell size="small" align="left">
                           <Label
                             variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
